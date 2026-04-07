@@ -5,9 +5,7 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MyImmo", "MyImmo", "{945403FC-4DB1-E4C3-DE15-133472595612}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyImmo", "MyImmo\MyImmo\MyImmo.csproj", "{7D370583-2451-E60C-F6C8-3D4E4FD93E8D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyImmo", "MyImmo\MyImmo.csproj", "{7FD2CA56-7E5B-4563-9C1A-45EA71F836BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyImmo", "MyImmo\MyImmo.csproj", "{7D370583-2451-E60C-F6C8-3D4E4FD93E8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
