@@ -1,11 +1,22 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using MyImmo.App.Services;
 using MyImmo.Domain.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "MyImmo API",
+        Version = "v1",
+        Description = "API documentation for MyImmo real estate endpoints."
+    });
+});
 builder.Services.AddScoped<IRealEstateService, RealEstateService>();
 builder.Services.AddOpenApi();
 
@@ -20,8 +31,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
+app.MapControllers();
 
 app.Run();
 

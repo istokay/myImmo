@@ -4,6 +4,8 @@ using MyImmo.App.Services;
 
 namespace MyImmo.Api.Controller;
 
+[ApiController]
+[Route("api/[controller]")]
 public class RealEstateController(IRealEstateService realEstateService) : ControllerBase
 {
     [HttpPost]
