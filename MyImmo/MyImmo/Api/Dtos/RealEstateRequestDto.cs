@@ -1,6 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace MyImmo.Api.Dtos;
 
 public class RealEstateRequestDto
 {
-    public int Id { get; set; }
+    [NotNull]
+    public required int Id { get; set; }
 }

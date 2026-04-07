@@ -1,9 +1,15 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using MyImmo.App.Dtos;
 
 namespace MyImmo.Api.Dtos;
 
 public class RealEstateResponseDto
 {
-    public int Id { get; set; }
+    [JsonPropertyName("id")]
+    [NotNull]
+    public required int Id { get; set; }
+    [JsonPropertyName("income")]
+    [AllowNull]
     public List<Income>? Income { get; set; }
 }
