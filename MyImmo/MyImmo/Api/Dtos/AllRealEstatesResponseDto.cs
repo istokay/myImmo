@@ -4,12 +4,12 @@ using MyImmo.App.Dtos;
 
 namespace MyImmo.Api.Dtos;
 
-public class RealEstateResponseDto
+public class AllRealEstatesResponseDto
 {
     [JsonPropertyName("id")]
     [NotNull]
     public required int Id { get; set; }
-    [JsonPropertyName("income")]
+    [JsonPropertyName("realEstate")]
     [AllowNull]
-    public List<RealEstate>? RealEstates { get; set; }
+    public RealEstate? RealEstates { get; set; }
 }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MyImmo.App.Dtos;
 using MyImmo.App.Interfaces;
 using MyImmo.Domain.Entities;
@@ -7,9 +8,20 @@ namespace MyImmo.Infrastructure.Repositories;
 
 public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRepository
 {
-    public Task<RealEstate> CreateRealEstate(RealEstate realEstate)
+    public async Task<RealEstate> CreateRealEstate(RealEstate realEstate)
     {
-        throw new NotImplementedException();
+        dbContext.RealEstates.Add(new RealEstateEntity
+        {
+            Id = realEstate.Id,
+            Incomes = realEstate.Incomes?.Select(i => new IncomeEntity
+            {
+                Amount = i.Amount,
+                Category = i.Category
+            }).ToList()
+        });
+
+        await dbContext.SaveChangesAsync();
+        return realEstate;
     }
 
     public Task DeleteRealEstate(int id)
@@ -17,9 +29,19 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         throw new NotImplementedException();
     }
 
-    public Task<List<RealEstate>> GetAllRealEstates()
+    public async Task<List<RealEstate>> GetAllRealEstates()
     {
-        throw new NotImplementedException();
+        var result = await dbContext.RealEstates.Select(entitie => new RealEstate
+        {
+            Id = entitie.Id,
+            Incomes = entitie.Incomes != null ? entitie.Incomes.Select(i => new Income
+            {
+                Amount = i.Amount,
+                Category = i.Category
+            }).ToList() : null
+        }).ToListAsync(); 
+
+        return result;
     }
 
     public Task<RealEstate> GetRealEstate(int id)
