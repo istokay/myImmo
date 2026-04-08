@@ -1,31 +1,32 @@
 using MyImmo.App.Dtos;
+using MyImmo.App.Interfaces;
 
 namespace MyImmo.App.Services;
 
-public class RealEstateService : IRealEstateService
+public class RealEstateService(IRealEstateRepository realEstateRepository) : IRealEstateService
 {
     public Task<Income> CreateRealEstate(Income income)
     {
-        throw new NotImplementedException();
+        return realEstateRepository.CreateRealEstate(income);
     }
 
     public Task DeleteRealEstate(int id)
     {
-        throw new NotImplementedException();
+        return realEstateRepository.DeleteRealEstate(id);
     }
 
     public Task<Incomes> GetAllRealEstates()
     {
-        throw new NotImplementedException();
+        return realEstateRepository.GetAllRealEstates();
     }
 
     public Task<Income> GetRealEstate(int id)
     {
-        throw new NotImplementedException();
+        return realEstateRepository.GetRealEstate(id);
     }
 
     public Task<Income> UpdateRealEstate(int id, Income income)
     {
-        throw new NotImplementedException();
+        return realEstateRepository.UpdateRealEstate(id, income);
     }
 }

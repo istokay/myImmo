@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using MyImmo.App.Interfaces;
 using MyImmo.App.Services;
 using MyImmo.Domain.Infrastructure.Database;
+using MyImmo.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddScoped<IRealEstateService, RealEstateService>();
+builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
 builder.Services.AddOpenApi();
 
 var connString = builder.Configuration.GetConnectionString("DefaultConnection");
