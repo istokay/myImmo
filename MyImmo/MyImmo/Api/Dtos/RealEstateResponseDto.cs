@@ -11,5 +11,5 @@ public class RealEstateResponseDto
     public required int Id { get; set; }
     [JsonPropertyName("income")]
     [AllowNull]
-    public List<Income>? Income { get; set; }
+    public List<RealEstate>? RealEstates { get; set; }
 }

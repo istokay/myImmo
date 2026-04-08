@@ -5,28 +5,28 @@ namespace MyImmo.App.Services;
 
 public class RealEstateService(IRealEstateRepository realEstateRepository) : IRealEstateService
 {
-    public Task<Income> CreateRealEstate(Income income)
+    public Task<RealEstate> CreateRealEstate(RealEstate realEstate)
     {
-        return realEstateRepository.CreateRealEstate(income);
+        throw new NotImplementedException();
     }
 
     public Task DeleteRealEstate(int id)
     {
-        return realEstateRepository.DeleteRealEstate(id);
+        throw new NotImplementedException();
     }
 
-    public Task<Incomes> GetAllRealEstates()
+    public Task<List<RealEstate>> GetAllRealEstates()
     {
-        return realEstateRepository.GetAllRealEstates();
+        throw new NotImplementedException();
     }
 
-    public Task<Income> GetRealEstate(int id)
+    public Task<RealEstate> GetRealEstate(int id)
     {
-        return realEstateRepository.GetRealEstate(id);
+        throw new NotImplementedException();
     }
 
-    public Task<Income> UpdateRealEstate(int id, Income income)
+    public Task<RealEstate> UpdateRealEstate(int id, RealEstate realEstate)
     {
-        return realEstateRepository.UpdateRealEstate(id, income);
+        throw new NotImplementedException();
     }
 }

@@ -7,7 +7,7 @@ namespace MyImmo.Infrastructure.Repositories;
 
 public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRepository
 {
-    public async Task<Income> CreateRealEstate(Income income)
+    public Task<RealEstate> CreateRealEstate(RealEstate realEstate)
     {
         throw new NotImplementedException();
     }
@@ -17,17 +17,17 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         throw new NotImplementedException();
     }
 
-    public Task<Incomes> GetAllRealEstates()
+    public Task<List<RealEstate>> GetAllRealEstates()
     {
         throw new NotImplementedException();
     }
 
-    public Task<Income> GetRealEstate(int id)
+    public Task<RealEstate> GetRealEstate(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Income> UpdateRealEstate(int id, Income income)
+    public Task<RealEstate> UpdateRealEstate(int id, RealEstate realEstate)
     {
         throw new NotImplementedException();
     }
