@@ -27,8 +27,15 @@ var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<RealEstateDbContext>(options =>
     options.UseSqlite(connString));
-
+ 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<RealEstateDbContext>();
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -10,4 +10,5 @@ public class RealEstateDbContext : DbContext
     }
 
     public DbSet<RealEstateEntity> RealEstates { get; set; }
+    public DbSet<IncomeEntity> Incomes { get; set; }
 }
