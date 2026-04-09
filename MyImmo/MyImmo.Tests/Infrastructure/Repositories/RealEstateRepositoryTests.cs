@@ -13,23 +13,20 @@ public class RealEstateRepositoryTests
     {
         await using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
-        var realEstate = new RealEstate
+        var realEstate = new RealEstatePost
         {
-            Id = 42,
             Incomes =
             [
-                new Income { Amount = 1200m, Category = IncomeCategory.MonthlyPayment },
-                new Income { Amount = 5000m, Category = IncomeCategory.OneTimePayment }
+                new IncomePost { Amount = 1200m, IncomeCategory = IncomeCategory.MonthlyPayment },
+                new IncomePost { Amount = 5000m, IncomeCategory = IncomeCategory.OneTimePayment }
             ]
         };
 
         var created = await repository.CreateRealEstate(realEstate);
 
-        Assert.Same(realEstate, created);
-
         var persisted = await dbContext.RealEstates
             .Include(entity => entity.Incomes)
-            .SingleAsync(entity => entity.Id == 42);
+            .SingleAsync();
 
         Assert.NotNull(persisted.Incomes);
         Assert.Collection(
@@ -51,9 +48,8 @@ public class RealEstateRepositoryTests
     {
         await using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
-        var realEstate = new RealEstate
+        var realEstate = new RealEstatePost
         {
-            Id = 77,
             Incomes = null
         };
 
@@ -61,7 +57,7 @@ public class RealEstateRepositoryTests
 
         var persisted = await dbContext.RealEstates
             .Include(entity => entity.Incomes)
-            .SingleAsync(entity => entity.Id == 77);
+            .SingleAsync();
 
         Assert.NotNull(persisted.Incomes);
         Assert.Empty(persisted.Incomes!);

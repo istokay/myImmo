@@ -1,5 +1,6 @@
 {
     "csharp-dev-tools.roslyn.projectOrSolutionFiles": [
         "/Users/tanjajurjut/dev/private/myImmo/MyImmo/myImmo.sln"
-    ]
+    ],
+    "editor.formatOnSave": true
 }

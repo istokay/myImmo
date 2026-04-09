@@ -5,7 +5,7 @@ namespace MyImmo.App.Services;
 
 public class RealEstateService(IRealEstateRepository realEstateRepository) : IRealEstateService
 {
-    public async Task<RealEstate> CreateRealEstate(RealEstate realEstate)
+    public async Task<RealEstate> CreateRealEstate(RealEstatePost realEstate)
     {
        return await realEstateRepository.CreateRealEstate(realEstate);
     }
@@ -15,7 +15,7 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
         await realEstateRepository.DeleteRealEstate(id);
     }
 
-    public async Task<List<RealEstate>> GetAllRealEstates()
+    public async Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates()
     {
         return await realEstateRepository.GetAllRealEstates();
     }
@@ -25,7 +25,7 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
         return await realEstateRepository.GetRealEstate(id);
     }
 
-    public async Task<RealEstate> UpdateRealEstate(int id, RealEstate realEstate)
+    public async Task<RealEstate> UpdateRealEstate(int id, RealEstatePost realEstate)
     {
         return await realEstateRepository.UpdateRealEstate(id, realEstate);
     }

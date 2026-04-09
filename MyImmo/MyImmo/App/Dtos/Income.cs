@@ -2,7 +2,7 @@ namespace MyImmo.App.Dtos;
 
 public class Income
 {
-    public required decimal Amount { get; set; }
-
-    public required IncomeCategory Category { get; set; }
+    public int Id {get; set;}
+    public required decimal Amount {get; set;}
+    public required IncomeCategory IncomeCategory {get; set;}
 }
