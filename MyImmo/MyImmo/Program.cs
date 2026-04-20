@@ -27,8 +27,18 @@ var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<RealEstateDbContext>(options =>
     options.UseSqlite(connString));
- 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowAngular");
 
 using (var scope = app.Services.CreateScope())
 {
