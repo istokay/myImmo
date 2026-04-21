@@ -15,6 +15,7 @@ public class RealEstateRepositoryTests
         var repository = new RealEstateRepository(dbContext);
         var realEstate = new RealEstatePost
         {
+            Name = "Immo1",
             Incomes =
             [
                 new IncomePost { Amount = 1200m, IncomeCategory = IncomeCategory.MonthlyPayment },
@@ -50,6 +51,7 @@ public class RealEstateRepositoryTests
         var repository = new RealEstateRepository(dbContext);
         var realEstate = new RealEstatePost
         {
+            Name = "Immo",
             Incomes = null
         };
 

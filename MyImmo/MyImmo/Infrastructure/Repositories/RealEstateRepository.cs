@@ -12,6 +12,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     {
         var entity = dbContext.RealEstates.Add(new RealEstateEntity
         {
+            Name = realEstate.Name,
             Incomes = realEstate.Incomes?.Select(i => new IncomeEntity
             {
                 Amount = i.Amount,
@@ -24,6 +25,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         var result = new RealEstate
         {
             Id = entity.Entity.Id,
+            Name = entity.Entity.Name,
             Incomes = entity.Entity.Incomes != null ?
             entity.Entity.Incomes.Select(i =>
                 new Income
@@ -58,6 +60,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     {
         var result = await dbContext.RealEstates.Select(entitie => new RealEstate
         {
+            Name = entitie.Name,
             Id = entitie.Id,
             Incomes = entitie.Incomes != null ? entitie.Incomes.Select(i => new Income
             {
@@ -80,6 +83,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
 
         return new RealEstate
         {
+            Name = realEstate.Name,
             Id = realEstate.Id,
             Incomes = realEstate.Incomes?.Select(i => new Income
             {
