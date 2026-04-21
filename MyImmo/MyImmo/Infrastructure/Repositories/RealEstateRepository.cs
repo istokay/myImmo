@@ -37,9 +37,21 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         return result;
     }
 
-    public Task<bool> DeleteRealEstateIncome(int realEstateId, int incomeId)
+    public async Task<bool> DeleteRealEstateIncome(int realEstateId, int incomeId)
     {
-        throw new NotImplementedException();
+        var isDeleted = true;
+
+        var income = await dbContext.Incomes.FirstOrDefaultAsync(i => i.Id == realEstateId && i.RealEstateId == realEstateId);
+
+        if (income == null)
+        {
+            return !isDeleted;
+        }
+        dbContext.Incomes.Remove(income);
+
+        await dbContext.SaveChangesAsync();
+
+        return isDeleted;
     }
 
     public async Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates()
