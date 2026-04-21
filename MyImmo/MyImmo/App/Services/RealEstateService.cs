@@ -23,6 +23,14 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
         return await realEstateRepository.GetAllRealEstates();
     }
 
+    public async Task DeleteRealEstate(int id)
+    {
+        var realEstateDeleted = await realEstateRepository.DeleteRealEstate(id);
+
+        if (realEstateDeleted == false)
+            throw new EntityNotFoundException(id.ToString());
+    }
+
     public async Task<RealEstate> GetRealEstate(int id)
     {
         var realEstate = await realEstateRepository.GetRealEstate(id);

@@ -63,4 +63,22 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
             return StatusCode(500);
         }
     }
+
+    [HttpDelete("{realEstateId}")]
+    public async Task<ActionResult> DeleteRealEstateById(int realEstateId)
+    {
+        try
+        {
+            await realEstateService.DeleteRealEstate(realEstateId);
+            return Ok();
+        }
+        catch (EntityNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
 }

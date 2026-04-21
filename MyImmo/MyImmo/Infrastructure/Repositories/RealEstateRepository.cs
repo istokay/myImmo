@@ -94,4 +94,20 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     {
         throw new NotImplementedException();
     }
+
+    public async Task<bool> DeleteRealEstate(int id)
+    {
+        var isDeleted = true;
+
+        var realEstate = await dbContext.RealEstates.FirstOrDefaultAsync(re => re.Id == id);
+
+        if (realEstate == null)
+            return !isDeleted;
+
+        dbContext.RealEstates.Remove(realEstate);
+
+        await dbContext.SaveChangesAsync();
+
+        return isDeleted;
+    }
 }
