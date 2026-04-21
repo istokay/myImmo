@@ -1,1 +1,5 @@
-<p>real-estate-component works!</p>
+@for (realEstate of api.getAllRealEstates$ | async; track realEstate.id) {
+  @for (income of realEstate.incomes; track income.id) {
+    {{ income.amount }}
+  }
+}
