@@ -36,4 +36,10 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
         else
             return NotFound();
     }
+    [HttpDelete("{realEstateId}/{incomeId}")]
+    public async Task<ActionResult> DeleteIncomeById(int realEstateId, int incomeId)
+    {
+        await realEstateService.DeleteRealEstateIncome(realEstateId, incomeId);
+        return Ok();
+    }
 }

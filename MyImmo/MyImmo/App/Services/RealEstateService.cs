@@ -7,12 +7,12 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
 {
     public async Task<RealEstate> CreateRealEstate(RealEstatePost realEstate)
     {
-       return await realEstateRepository.CreateRealEstate(realEstate);
+        return await realEstateRepository.CreateRealEstate(realEstate);
     }
 
-    public async Task DeleteRealEstate(int id)
+    public async Task DeleteRealEstateIncome(int realEstateId, int incomeId)
     {
-        await realEstateRepository.DeleteRealEstate(id);
+        await realEstateRepository.DeleteRealEstateIncome(realEstateId, incomeId);
     }
 
     public async Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates()
