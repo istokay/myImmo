@@ -69,9 +69,25 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         return result;
     }
 
-    public Task<RealEstate> GetRealEstate(int id)
+    public async Task<RealEstate?> GetRealEstate(int id)
     {
-        throw new NotImplementedException();
+        var realEstate = await dbContext.RealEstates
+        .Include(re => re.Incomes)
+        .FirstOrDefaultAsync(re => re.Id == id);
+
+        if (realEstate == null)
+            return null;
+
+        return new RealEstate
+        {
+            Id = realEstate.Id,
+            Incomes = realEstate.Incomes?.Select(i => new Income
+            {
+                Id = i.Id,
+                Amount = i.Amount,
+                IncomeCategory = i.Category
+            }).ToList()
+        };
     }
 
     public Task<RealEstate> UpdateRealEstate(int id, RealEstatePost realEstate)

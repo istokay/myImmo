@@ -31,12 +31,21 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
     [HttpGet("{id}")]
     public async Task<ActionResult<RealEstateResponse>> GetRealEstateById(int id)
     {
-        var response = await realEstateService.GetRealEstate(id);
-        if (response != null)
+        try
+        {
+            var response = await realEstateService.GetRealEstate(id);
             return Ok(response);
-        else
+        }
+        catch (EntityNotFoundException)
+        {
             return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
     }
+
     [HttpDelete("{realEstateId}/{incomeId}")]
     public async Task<ActionResult> DeleteIncomeById(int realEstateId, int incomeId)
     {
