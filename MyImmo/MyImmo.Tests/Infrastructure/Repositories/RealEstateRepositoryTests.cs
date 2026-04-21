@@ -18,8 +18,8 @@ public class RealEstateRepositoryTests
             Name = "Immo1",
             Incomes =
             [
-                new IncomePost { Amount = 1200m, IncomeCategory = IncomeCategory.MonthlyPayment },
-                new IncomePost { Amount = 5000m, IncomeCategory = IncomeCategory.OneTimePayment }
+                new IncomePost { Name = "i1", Amount = 1200m, IncomeCategory = IncomeCategory.MonthlyPayment },
+                new IncomePost { Name = "i2", Amount = 5000m, IncomeCategory = IncomeCategory.OneTimePayment }
             ]
         };
 
@@ -34,7 +34,7 @@ public class RealEstateRepositoryTests
             persisted.Incomes!,
             income =>
             {
-                Assert.Equal(1200m, income.Amount);
+                Assert.Equal("i1", income.Name);
                 Assert.Equal(IncomeCategory.MonthlyPayment, income.Category);
             },
             income =>

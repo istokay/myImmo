@@ -15,6 +15,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             Name = realEstate.Name,
             Incomes = realEstate.Incomes?.Select(i => new IncomeEntity
             {
+                Name = i.Name,
                 Amount = i.Amount,
                 Category = i.IncomeCategory
             }).ToList()
@@ -31,6 +32,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
                 new Income
                 {
                     Id = i.Id,
+                    Name = i.Name,
                     Amount = i.Amount,
                     IncomeCategory = i.Category
                 }
@@ -64,6 +66,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             Id = entitie.Id,
             Incomes = entitie.Incomes != null ? entitie.Incomes.Select(i => new Income
             {
+                Name = i.Name,
                 Amount = i.Amount,
                 IncomeCategory = i.Category
             }).ToList() : null
@@ -88,6 +91,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             Incomes = realEstate.Incomes?.Select(i => new Income
             {
                 Id = i.Id,
+                Name = i.Name,
                 Amount = i.Amount,
                 IncomeCategory = i.Category
             }).ToList()
