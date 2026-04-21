@@ -8,5 +8,5 @@ public interface IRealEstateRepository
     Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates();
     Task<RealEstate> CreateRealEstate(RealEstatePost realEstate);
     Task<RealEstate> UpdateRealEstate(int id, RealEstatePost realEstate);
-    Task DeleteRealEstateIncome(int realEstateId, int incomeId);
+    Task<bool> DeleteRealEstateIncome(int realEstateId, int incomeId);
 }

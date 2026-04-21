@@ -37,7 +37,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         return result;
     }
 
-    public Task DeleteRealEstateIncome(int realEstateId, int incomeId)
+    public Task<bool> DeleteRealEstateIncome(int realEstateId, int incomeId)
     {
         throw new NotImplementedException();
     }

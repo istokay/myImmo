@@ -1,4 +1,5 @@
 using MyImmo.App.Dtos;
+using MyImmo.App.Exceptions;
 using MyImmo.App.Interfaces;
 
 namespace MyImmo.App.Services;
@@ -12,7 +13,9 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
 
     public async Task DeleteRealEstateIncome(int realEstateId, int incomeId)
     {
-        await realEstateRepository.DeleteRealEstateIncome(realEstateId, incomeId);
+        var isDeleted = await realEstateRepository.DeleteRealEstateIncome(realEstateId, incomeId);
+        if (!isDeleted)
+            throw new EntityNotFoundException(realEstateId.ToString());
     }
 
     public async Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates()

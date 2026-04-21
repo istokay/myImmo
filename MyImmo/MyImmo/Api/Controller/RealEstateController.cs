@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyImmo.Api.Dtos;
 using MyImmo.App.Dtos;
+using MyImmo.App.Exceptions;
 using MyImmo.App.Services;
 
 namespace MyImmo.Api.Controller;
@@ -39,7 +40,18 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
     [HttpDelete("{realEstateId}/{incomeId}")]
     public async Task<ActionResult> DeleteIncomeById(int realEstateId, int incomeId)
     {
-        await realEstateService.DeleteRealEstateIncome(realEstateId, incomeId);
-        return Ok();
+        try
+        {
+            await realEstateService.DeleteRealEstateIncome(realEstateId, incomeId);
+            return Ok();
+        }
+        catch (EntityNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
     }
 }
