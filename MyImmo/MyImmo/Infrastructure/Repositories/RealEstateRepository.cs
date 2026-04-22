@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyImmo.App.Dtos;
+using MyImmo.Domain.Dtos;
 using MyImmo.App.Interfaces;
 using MyImmo.Domain.Entities;
 using MyImmo.Domain.Infrastructure.Database;
@@ -115,8 +115,27 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             {
                 Name = i.Name,
                 Amount = i.Amount,
-                IncomeCategory = i.Category
+                IncomeCategory = i.Category,
             }).ToArray()
+        };
+    }
+
+
+    public async Task<Income?> UpdateIncome(int realEstateId, int incomeId, IncomePost incomePost)
+    {
+        var entity = await dbContext.Incomes.FirstOrDefaultAsync(i => i.Id == incomeId && i.RealEstateId == realEstateId);
+
+        if (entity == null)
+        {
+            return null;
+        }
+
+        return new Income
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            Amount = entity.Amount,
+            IncomeCategory = entity.Category
         };
     }
 

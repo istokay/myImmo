@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyImmo.Api.Dtos;
-using MyImmo.App.Dtos;
+using MyImmo.Domain.Dtos;
 using MyImmo.App.Exceptions;
 using MyImmo.App.Services;
 
@@ -88,6 +88,23 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
         {
             var result = await realEstateService.UpdateRealEstate(id, realEstate);
             return result;
+        }
+        catch (EntityNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
+    [HttpPut("{realEstateId}/{incomeId}")]
+    public async Task<ActionResult<Income>> UpdateRealEstateIncome(int realEstateId, int incomeId, [FromBody] IncomePost income)
+    {
+        try
+        {
+            var result = await realEstateService.UpdateIncome(realEstateId, incomeId, income);
+            return Ok(result);
         }
         catch (EntityNotFoundException)
         {

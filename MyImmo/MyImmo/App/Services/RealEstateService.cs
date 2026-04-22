@@ -50,4 +50,16 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
 
         return realEstateResult;
     }
+
+    public async Task<Income> UpdateIncome(int realEstateId, int incomeId, IncomePost incomePost)
+    {
+        var income = await realEstateRepository.UpdateIncome(realEstateId, incomeId, incomePost);
+
+        if (income == null)
+        {
+            throw new EntityNotFoundException(incomeId.ToString());
+        }
+
+        return income;
+    }
 }

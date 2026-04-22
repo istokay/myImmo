@@ -1,4 +1,4 @@
-namespace MyImmo.App.Dtos;
+namespace MyImmo.Domain.Dtos;
 
 public enum IncomeCategory
 {
