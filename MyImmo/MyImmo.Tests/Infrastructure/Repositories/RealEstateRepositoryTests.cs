@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyImmo.App.Dtos;
+using MyImmo.Domain.Dtos;
 using MyImmo.Domain.Infrastructure.Database;
 using MyImmo.Infrastructure.Repositories;
 using Xunit;
@@ -16,11 +16,6 @@ public class RealEstateRepositoryTests
         var realEstate = new RealEstatePost
         {
             Name = "Immo1",
-            Incomes =
-            [
-                new IncomePost { Name = "i1", Amount = 1200m, IncomeCategory = IncomeCategory.MonthlyPayment },
-                new IncomePost { Name = "i2", Amount = 5000m, IncomeCategory = IncomeCategory.OneTimePayment }
-            ]
         };
 
         var created = await repository.CreateRealEstate(realEstate);
@@ -29,19 +24,8 @@ public class RealEstateRepositoryTests
             .Include(entity => entity.Incomes)
             .SingleAsync();
 
-        Assert.NotNull(persisted.Incomes);
-        Assert.Collection(
-            persisted.Incomes!,
-            income =>
-            {
-                Assert.Equal("i1", income.Name);
-                Assert.Equal(IncomeCategory.MonthlyPayment, income.Category);
-            },
-            income =>
-            {
-                Assert.Equal(5000m, income.Amount);
-                Assert.Equal(IncomeCategory.OneTimePayment, income.Category);
-            });
+        Assert.Empty(persisted.Incomes!);
+        Assert.Equal("Immo1", persisted.Name);
     }
 
     [Fact]

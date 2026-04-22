@@ -1,4 +1,4 @@
-using MyImmo.App.Dtos;
+using MyImmo.Domain.Dtos;
 
 namespace MyImmo.Domain.Entities;
 

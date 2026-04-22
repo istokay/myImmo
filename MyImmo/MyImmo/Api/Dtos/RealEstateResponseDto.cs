@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using MyImmo.App.Dtos;
+using MyImmo.Domain.Dtos;
 
 namespace MyImmo.Api.Dtos;
 

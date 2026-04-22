@@ -12,13 +12,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     {
         var entity = dbContext.RealEstates.Add(new RealEstateEntity
         {
-            Name = realEstate.Name,
-            Incomes = realEstate.Incomes?.Select(i => new IncomeEntity
-            {
-                Name = i.Name,
-                Amount = i.Amount,
-                Category = i.IncomeCategory
-            }).ToList()
+            Name = realEstate.Name
         });
 
         await dbContext.SaveChangesAsync();
@@ -27,16 +21,6 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         {
             Id = entity.Entity.Id,
             Name = entity.Entity.Name,
-            Incomes = entity.Entity.Incomes != null ?
-            entity.Entity.Incomes.Select(i =>
-                new Income
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Amount = i.Amount,
-                    IncomeCategory = i.Category
-                }
-            ).ToList() : null
         };
         return result;
     }
@@ -63,14 +47,8 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         var result = await dbContext.RealEstates.Select(entitie => new RealEstate
         {
             Name = entitie.Name,
-            Id = entitie.Id,
-            Incomes = entitie.Incomes != null ? entitie.Incomes.Select(i => new Income
-            {
-                Name = i.Name,
-                Amount = i.Amount,
-                IncomeCategory = i.Category
-            }).ToList() : null
-        }).ToListAsync();
+            Id = entitie.Id
+        }).ToArrayAsync();
 
         return result;
     }
@@ -88,13 +66,6 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         {
             Name = realEstate.Name,
             Id = realEstate.Id,
-            Incomes = realEstate.Incomes?.Select(i => new Income
-            {
-                Id = i.Id,
-                Name = i.Name,
-                Amount = i.Amount,
-                IncomeCategory = i.Category
-            }).ToList()
         };
     }
 
@@ -111,12 +82,6 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         {
             Id = entity.Id,
             Name = entity.Name,
-            Incomes = entity.Incomes?.Select(i => new Income
-            {
-                Name = i.Name,
-                Amount = i.Amount,
-                IncomeCategory = i.Category,
-            }).ToArray()
         };
     }
 
@@ -125,7 +90,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     {
         var entity = await dbContext.Incomes.FirstOrDefaultAsync(i => i.Id == incomeId && i.RealEstateId == realEstateId);
 
-        if (entity == null)
+        if (entity == null || entity.RealEstate?.Name == null || entity.RealEstate?.Id == null)
         {
             return null;
         }
@@ -135,7 +100,13 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             Id = entity.Id,
             Name = entity.Name,
             Amount = entity.Amount,
-            IncomeCategory = entity.Category
+            IncomeCategory = entity.Category,
+            RealEstate = new RealEstate
+            {
+                Name = entity.RealEstate.Name,
+                Id = entity.RealEstate.Id
+            },
+            RealEstateId = entity.RealEstateId
         };
     }
 
