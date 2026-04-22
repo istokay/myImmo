@@ -98,9 +98,26 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         };
     }
 
-    public Task<RealEstate> UpdateRealEstate(int id, RealEstatePost realEstate)
+    public async Task<RealEstate?> UpdateRealEstate(int id, RealEstatePost realEstate)
     {
-        throw new NotImplementedException();
+        var entity = await dbContext.RealEstates.LastOrDefaultAsync(re => re.Id == id);
+
+        if (entity == null)
+        {
+            return null;
+        }
+
+        return new RealEstate
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            Incomes = entity.Incomes?.Select(i => new Income
+            {
+                Name = i.Name,
+                Amount = i.Amount,
+                IncomeCategory = i.Category
+            }).ToArray()
+        };
     }
 
     public async Task<bool> DeleteRealEstate(int id)

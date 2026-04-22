@@ -11,7 +11,7 @@ namespace MyImmo.Api.Controller;
 public class RealEstateController(IRealEstateService realEstateService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<RealEstateResponse>> CreateRealEstate(RealEstatePost realEstate)
+    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstate(RealEstatePost realEstate)
     {
         var response = await realEstateService.CreateRealEstate(realEstate);
         return Ok(response);
@@ -29,7 +29,7 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<RealEstateResponse>> GetRealEstateById(int id)
+    public async Task<ActionResult<RealEstateResponseDto>> GetRealEstateById(int id)
     {
         try
         {
@@ -71,6 +71,23 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
         {
             await realEstateService.DeleteRealEstate(realEstateId);
             return Ok();
+        }
+        catch (EntityNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
+    [HttpPut("{id}")]
+    public async Task<ActionResult<RealEstate>> UpdateRealEstate(int id, [FromBody] RealEstatePost realEstate)
+    {
+        try
+        {
+            var result = await realEstateService.UpdateRealEstate(id, realEstate);
+            return result;
         }
         catch (EntityNotFoundException)
         {

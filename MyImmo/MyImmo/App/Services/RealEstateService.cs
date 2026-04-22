@@ -41,6 +41,13 @@ public class RealEstateService(IRealEstateRepository realEstateRepository) : IRe
 
     public async Task<RealEstate> UpdateRealEstate(int id, RealEstatePost realEstate)
     {
-        return await realEstateRepository.UpdateRealEstate(id, realEstate);
+        var realEstateResult = await realEstateRepository.UpdateRealEstate(id, realEstate);
+
+        if (realEstateResult == null)
+        {
+            throw new EntityNotFoundException(id.ToString());
+        }
+
+        return realEstateResult;
     }
 }

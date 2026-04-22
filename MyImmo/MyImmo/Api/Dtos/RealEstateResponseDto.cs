@@ -3,11 +3,11 @@ using MyImmo.App.Dtos;
 
 namespace MyImmo.Api.Dtos;
 
-public class RealEstateResponse
+public class RealEstateResponseDto
 {
     [JsonPropertyName("id")]
-    public int Id {get; set;}
+    public int Id { get; set; }
 
     [JsonPropertyName("realEstate")]
-    public required RealEstatePost RealEstate {get; set;}
+    public required RealEstatePost RealEstate { get; set; }
 }
