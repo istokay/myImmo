@@ -8,3 +8,11 @@
 .side {
   width: 200px;
 }
+
+.content {
+  width: 100%;
+}
+
+.container {
+  height: 100vh;
+}
