@@ -4,8 +4,10 @@ using MyImmo.App.Exceptions;
 using MyImmo.App.Services;
 using MyImmo.Domain.Dtos;
 
+namespace MyImmo.Api.Controller;
+
 [ApiController]
-[Route("api/[contoller]")]
+[Route("api/[controller]")]
 public class IncomeController(IncomeService incomeService) : ControllerBase
 {
     [HttpPost("{realEstateId}/income")]
