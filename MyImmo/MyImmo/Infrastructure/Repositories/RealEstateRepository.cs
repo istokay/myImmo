@@ -25,6 +25,33 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         return result;
     }
 
+    public async Task<Income?> CreateIncome(int realEstateId, IncomePost incomePost)
+    {
+        var realEstate = await dbContext.RealEstates.FirstOrDefaultAsync(re => re.Id == realEstateId);
+
+        if (realEstate == null)
+            return null;
+
+        var entity = dbContext.Add(new IncomeEntity
+        {
+            Name = incomePost.Name,
+            Amount = incomePost.Amount,
+            Category = incomePost.IncomeCategory,
+            RealEstateId = realEstateId,
+        });
+
+        await dbContext.SaveChangesAsync();
+
+        return new Income
+        {
+            Id = entity.Entity.Id,
+            Name = entity.Entity.Name,
+            Amount = entity.Entity.Amount,
+            RealEstateId = entity.Entity.RealEstateId,
+            IncomeCategory = entity.Entity.Category
+        };
+    }
+
     public async Task<bool> DeleteRealEstateIncome(int realEstateId, int incomeId)
     {
         var isDeleted = true;

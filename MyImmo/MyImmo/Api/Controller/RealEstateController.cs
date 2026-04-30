@@ -17,6 +17,24 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
         return Ok(response);
     }
 
+    [HttpPost]
+    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstateIncome(int realEstateId, IncomePost incomePost)
+    {
+        try
+        {
+            var response = await realEstateService.CreateIncome(realEstateId, incomePost);
+            return Ok(response);
+        }
+        catch (EntityNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
+
     [HttpGet]
     public async Task<ActionResult<AllRealEstatesResponseDto>> GetAllRealEstates()
     {

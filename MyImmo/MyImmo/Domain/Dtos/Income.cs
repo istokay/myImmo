@@ -7,5 +7,5 @@ public class Income
     public required decimal Amount { get; set; }
     public required IncomeCategory IncomeCategory { get; set; }
     public int RealEstateId { get; set; }
-    public required RealEstate RealEstate { get; set; }
+    public RealEstate? RealEstate { get; set; }
 }
