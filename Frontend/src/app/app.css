@@ -1,7 +1,7 @@
 .sidenav-container {
-  flex: 1;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   height: 100%;
 }
 
@@ -14,5 +14,7 @@
 }
 
 .container {
+  display: grid;
+  grid-template-rows: auto 1fr;
   height: 100vh;
 }
