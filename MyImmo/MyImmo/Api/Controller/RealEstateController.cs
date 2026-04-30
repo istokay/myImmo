@@ -17,8 +17,8 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
         return Ok(response);
     }
 
-    [HttpPost]
-    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstateIncome(int realEstateId, IncomePost incomePost)
+    [HttpPost("{realEstateId}/income")]
+    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstateIncome(int realEstateId, [FromBody] IncomePost incomePost)
     {
         try
         {
