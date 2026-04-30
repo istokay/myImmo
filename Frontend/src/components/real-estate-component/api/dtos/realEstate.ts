@@ -1,6 +1,7 @@
 import { Income } from './income';
 
 export type RealEstate = {
-  id: number;
+  id?: number;
+  name?: string | undefined;
   incomes: Income[];
 };
