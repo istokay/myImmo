@@ -95,6 +95,24 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             Id = realEstate.Id,
         };
     }
+    public async Task<IReadOnlyCollection<Income>?> GetImcomes(int realEstateId)
+    {
+        var realEstate = await dbContext.RealEstates.FirstOrDefaultAsync(re => re.Id == realEstateId);
+
+        if (realEstate == null)
+            return null;
+
+        var entities = await dbContext.Incomes.Where(i => i.RealEstateId == realEstateId).Select(i => new Income
+        {
+            Id = i.Id,
+            Name = i.Name,
+            Amount = i.Amount,
+            IncomeCategory = i.Category,
+            RealEstateId = i.RealEstateId
+        }).ToListAsync();
+
+        return entities;
+    }
 
     public async Task<RealEstate?> UpdateRealEstate(int id, RealEstatePost realEstate)
     {

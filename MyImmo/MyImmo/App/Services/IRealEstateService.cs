@@ -5,6 +5,7 @@ namespace MyImmo.App.Services;
 public interface IRealEstateService
 {
     Task<RealEstate> GetRealEstate(int id);
+    Task<IReadOnlyCollection<Income>> GetImcomes(int realEstateId);
     Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates();
     Task<RealEstate> CreateRealEstate(RealEstatePost realEstate);
     Task<Income> CreateIncome(int realEstateId, IncomePost incomePost);

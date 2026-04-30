@@ -47,11 +47,11 @@ public class RealEstateController(IRealEstateService realEstateService) : Contro
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<RealEstateResponseDto>> GetRealEstateById(int id)
+    public async Task<ActionResult<RealEstateResponseDto>> GetRealEstateIncomes(int id)
     {
         try
         {
-            var response = await realEstateService.GetRealEstate(id);
+            var response = await realEstateService.GetImcomes(id);
             return Ok(response);
         }
         catch (EntityNotFoundException)

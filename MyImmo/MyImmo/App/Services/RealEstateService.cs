@@ -6,6 +6,15 @@ namespace MyImmo.App.Services;
 
 public class RealEstateService(IRealEstateRepository realEstateRepository) : IRealEstateService
 {
+    public async Task<IReadOnlyCollection<Income>> GetImcomes(int realEstateId)
+    {
+        var result = await realEstateRepository.GetImcomes(realEstateId);
+
+        if (result == null)
+            throw new EntityNotFoundException(realEstateId.ToString());
+
+        return result;
+    }
     public async Task<RealEstate> CreateRealEstate(RealEstatePost realEstate)
     {
         return await realEstateRepository.CreateRealEstate(realEstate);
