@@ -6,14 +6,14 @@ using MyImmo.Domain.Dtos;
 
 [ApiController]
 [Route("api/[contoller]")]
-public class IncomeController(IRealEstateService realEstateService) : ControllerBase
+public class IncomeController(IncomeService incomeService) : ControllerBase
 {
     [HttpPost("{realEstateId}/income")]
     public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstateIncome(int realEstateId, [FromBody] IncomePost incomePost)
     {
         try
         {
-            var response = await realEstateService.CreateIncome(realEstateId, incomePost);
+            var response = await incomeService.CreateIncome(realEstateId, incomePost);
             return Ok(response);
         }
         catch (EntityNotFoundException)
@@ -31,7 +31,7 @@ public class IncomeController(IRealEstateService realEstateService) : Controller
     {
         try
         {
-            var response = await realEstateService.GetImcomes(id);
+            var response = await incomeService.GetImcomes(id);
             return Ok(response);
         }
         catch (EntityNotFoundException)
@@ -49,7 +49,7 @@ public class IncomeController(IRealEstateService realEstateService) : Controller
     {
         try
         {
-            await realEstateService.DeleteRealEstateIncome(realEstateId, incomeId);
+            await incomeService.DeleteRealEstateIncome(realEstateId, incomeId);
             return Ok();
         }
         catch (EntityNotFoundException)
@@ -66,7 +66,7 @@ public class IncomeController(IRealEstateService realEstateService) : Controller
     {
         try
         {
-            var result = await realEstateService.UpdateIncome(realEstateId, incomeId, income);
+            var result = await incomeService.UpdateIncome(realEstateId, incomeId, income);
             return Ok(result);
         }
         catch (EntityNotFoundException)
