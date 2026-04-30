@@ -8,10 +8,10 @@ namespace MyImmo.Api.Controller;
 
 [ApiController]
 [Route("api/[controller]")]
-public class IncomeController(IncomeService incomeService) : ControllerBase
+public class IncomeController(IIncomeService incomeService) : ControllerBase
 {
     [HttpPost("{realEstateId}/income")]
-    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstateIncome(int realEstateId, [FromBody] IncomePost incomePost)
+    public async Task<ActionResult<Income>> CreateRealEstateIncome(int realEstateId, [FromBody] IncomePost incomePost)
     {
         try
         {
