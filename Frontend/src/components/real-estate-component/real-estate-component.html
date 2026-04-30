@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <button mat-button>Immobilie hinzufügen</button>
+    <button mat-button>Immobilie hinzufügen <mat-icon>add</mat-icon></button>
     @for (realEstate of api.getAllRealEstates$ | async; track realEstate.id) {
       @for (income of realEstate.incomes; track income.id) {
         {{ income.amount }}

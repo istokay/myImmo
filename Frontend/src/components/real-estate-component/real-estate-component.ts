@@ -4,10 +4,11 @@ import { RealEstateApiService } from './api/services/real-estate-api-service';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-real-estate-component',
-  imports: [AsyncPipe, MatCardModule, MatButtonModule],
+  imports: [AsyncPipe, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './real-estate-component.html',
   styleUrl: './real-estate-component.css',
   providers: [RealEstateService, RealEstateApiService],
