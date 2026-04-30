@@ -80,21 +80,6 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         return result;
     }
 
-    public async Task<RealEstate?> GetRealEstate(int id)
-    {
-        var realEstate = await dbContext.RealEstates
-        .Include(re => re.Incomes)
-        .FirstOrDefaultAsync(re => re.Id == id);
-
-        if (realEstate == null)
-            return null;
-
-        return new RealEstate
-        {
-            Name = realEstate.Name,
-            Id = realEstate.Id,
-        };
-    }
     public async Task<IReadOnlyCollection<Income>?> GetImcomes(int realEstateId)
     {
         var realEstate = await dbContext.RealEstates.FirstOrDefaultAsync(re => re.Id == realEstateId);
