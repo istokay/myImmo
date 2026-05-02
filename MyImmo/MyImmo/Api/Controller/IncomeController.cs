@@ -28,12 +28,12 @@ public class IncomeController(IIncomeService incomeService) : ControllerBase
         }
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<RealEstateResponseDto>> GetRealEstateIncomes(int id)
+    [HttpGet("{realEstateId}")]
+    public async Task<ActionResult<IReadOnlyCollection<Income>>> GetRealEstateIncomes(int realEstateId)
     {
         try
         {
-            var response = await incomeService.GetImcomes(id);
+            var response = await incomeService.GetImcomes(realEstateId);
             return Ok(response);
         }
         catch (EntityNotFoundException)

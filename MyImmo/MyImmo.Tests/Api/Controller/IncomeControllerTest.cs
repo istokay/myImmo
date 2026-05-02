@@ -13,7 +13,7 @@ namespace MyImmo.Tests.Api.Controller;
 public class IncomeControllerTest
 {
     [Fact]
-    public async Task CreateRealEstateIncome_should_return_RealEstateDto_if_Exists()
+    public async Task CreateRealEstateIncome_should_return_Income_if_Exists()
     {
         var incomeServiceMock = new Mock<IIncomeService>();
 
@@ -74,5 +74,50 @@ public class IncomeControllerTest
         var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
 
         Assert.Equal(404, notFoundResult.StatusCode);
+    }
+    [Fact]
+    public async Task GetRealEstateIncome_should_return_Income_if_Exists()
+    {
+        var incomeServiceMock = new Mock<IIncomeService>();
+
+        var realEstateId = 11;
+
+        var incomePost = new IncomePost
+        {
+            Name = "income2",
+            Amount = 44,
+            IncomeCategory = IncomeCategory.MonthlyPayment
+        };
+
+        incomeServiceMock.Setup(x => x.GetImcomes(realEstateId))
+            .ReturnsAsync(
+                (IReadOnlyCollection<Income>)
+                new List<Income>
+                {
+                    new Income
+                    {
+                        Id = 3,
+                        Name = incomePost.Name,
+                        Amount = incomePost.Amount,
+                        IncomeCategory = incomePost.IncomeCategory,
+                        RealEstateId = realEstateId
+                    }
+                }
+            );
+
+        var controller = new IncomeController(incomeServiceMock.Object);
+
+        var result = await controller.GetRealEstateIncomes(realEstateId);
+
+        var okResult = Assert.IsType<ActionResult<IReadOnlyCollection<Income>>>(result);
+        var incomes = Assert.IsType<IReadOnlyCollection<Income>>(((OkObjectResult)result!.Result!).Value, exactMatch: false);
+
+        foreach (var income in incomes)
+        {
+            Assert.Equal(3, income.Id);
+            Assert.Equal(44, income.Amount);
+            Assert.Equal(IncomeCategory.MonthlyPayment, income.IncomeCategory);
+            Assert.Equal(11, income.RealEstateId);
+        }
     }
 }
