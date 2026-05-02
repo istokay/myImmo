@@ -35,8 +35,7 @@ public class RealEstateRepositoryTests
         var repository = new RealEstateRepository(dbContext);
         var realEstate = new RealEstatePost
         {
-            Name = "Immo",
-            Incomes = null
+            Name = "Immo"
         };
 
         await repository.CreateRealEstate(realEstate);
