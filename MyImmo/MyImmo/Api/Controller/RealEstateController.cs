@@ -11,7 +11,7 @@ namespace MyImmo.Api.Controller;
 public class RealEstateController(IRealEstateService realEstateService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstate(RealEstatePost realEstate)
+    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstate([FromBody] RealEstatePost realEstate)
     {
         var response = await realEstateService.CreateRealEstate(realEstate);
         return Ok(response);
