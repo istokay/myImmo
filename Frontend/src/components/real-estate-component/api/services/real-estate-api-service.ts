@@ -30,4 +30,12 @@ export class RealEstateApiService {
       this.realEstates.update((realEstates) => [...realEstates, re]);
     });
   }
+
+  deleteRealEstate(realEstateId: number) {
+    this.http.delete<RealEstate>(`/api/realEstate/${realEstateId}`).subscribe(() => {
+      this.realEstates.update((realEstates) => [
+        ...realEstates.filter((re) => re.id !== realEstateId),
+      ]);
+    });
+  }
 }

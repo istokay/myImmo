@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RealEstateDialogComponent } from './dialog-component/dialog-component';
 import { RealEstate } from './api/dtos/realEstate';
 import { MatTableModule } from '@angular/material/table';
+import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-real-estate-component',
@@ -20,7 +21,7 @@ export class RealEstateComponent {
   readonly dialog = inject(MatDialog);
   readonly realEstateApiService = inject(RealEstateApiService);
 
-  displayedColumns: string[] = ['name', 'edit'];
+  displayedColumns: string[] = ['name', 'edit', 'delete'];
   dataSource = computed(() => this.realEstateApiService.realEstates());
   openDialog(realEstate?: RealEstate): void {
     const dialogRef = this.dialog.open(RealEstateDialogComponent, {
@@ -37,5 +38,15 @@ export class RealEstateComponent {
 
   updateRealEstate(realEstate: RealEstate) {
     this.openDialog(realEstate);
+  }
+
+  deleteRealEstate(id: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialog);
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed === true) {
+        this.realEstateApiService.deleteRealEstate(id);
+      }
+    });
   }
 }
