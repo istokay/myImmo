@@ -45,7 +45,6 @@ app.UseCors("AllowAngular");
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RealEstateDbContext>();
-    db.Database.EnsureDeleted();
     db.Database.EnsureCreated();
 }
 
