@@ -1,11 +1,8 @@
 <mat-card>
   <mat-card-content>
     <button mat-button (click)="openDialog()">Immobilie hinzufügen <mat-icon>add</mat-icon></button>
-    @for (realEstate of api.getAllRealEstates$ | async; track realEstate.id) {
+    @for (realEstate of realEstateApiService.realEstates(); track realEstate.id) {
       {{ realEstate.name }}
-      @for (income of realEstate.incomes; track income.id) {
-        {{ income.amount }}
-      }
     }
   </mat-card-content>
 </mat-card>
