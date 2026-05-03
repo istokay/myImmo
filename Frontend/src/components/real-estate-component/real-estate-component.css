@@ -3,3 +3,9 @@ mat-card {
   height: calc(100% - 0.5rem * 2);
   margin: 0.5rem;
 }
+
+.mat-column-name {
+  width: 80%;
+  min-width: 80%;
+  max-width: 80%;
+}
