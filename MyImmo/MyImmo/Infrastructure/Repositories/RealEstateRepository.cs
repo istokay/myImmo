@@ -37,12 +37,16 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
 
     public async Task<RealEstate?> UpdateRealEstate(int id, RealEstatePost realEstate)
     {
-        var entity = await dbContext.RealEstates.LastOrDefaultAsync(re => re.Id == id);
+        var entity = await dbContext.RealEstates.SingleOrDefaultAsync(re => re.Id == id);
 
         if (entity == null)
         {
             return null;
         }
+
+        entity.Name = realEstate.Name;
+
+        await dbContext.SaveChangesAsync();
 
         return new RealEstate
         {

@@ -18,9 +18,11 @@ export class RealEstateApiService {
   }
 
   updateRealEstate(realEstateId: number, realEstate: RealEstate) {
-    this.http
-      .put<RealEstate>(`/api/realEstate/${realEstateId}`, realEstate)
-      .subscribe((re) => this.realEstates.update((realEstates) => [...realEstates, re]));
+    this.http.put<RealEstate>(`/api/realEstate/${realEstateId}`, realEstate).subscribe((re) =>
+      this.realEstates.update((realEstates) => {
+        return [...realEstates.filter((filterRe) => filterRe.id != re.id), re];
+      }),
+    );
   }
 
   createRealEstate(realEstate: RealEstate) {

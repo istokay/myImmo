@@ -20,11 +20,11 @@ export class RealEstateComponent {
   readonly dialog = inject(MatDialog);
   readonly realEstateApiService = inject(RealEstateApiService);
 
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name', 'edit'];
   dataSource = computed(() => this.realEstateApiService.realEstates());
-  openDialog(): void {
+  openDialog(realEstate?: RealEstate): void {
     const dialogRef = this.dialog.open(RealEstateDialogComponent, {
-      data: this.realEstateApiService,
+      data: { id: realEstate?.id, name: realEstate?.name },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -34,4 +34,8 @@ export class RealEstateComponent {
     });
   }
   api = inject(RealEstateApiService);
+
+  updateRealEstate(realEstate: RealEstate) {
+    this.openDialog(realEstate);
+  }
 }
