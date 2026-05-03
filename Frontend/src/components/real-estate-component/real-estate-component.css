@@ -4,6 +4,11 @@ mat-card {
   margin: 0.5rem;
 }
 
+mat-table,
+.hint {
+  margin: 1rem;
+}
+
 .mat-column-name {
   width: 80%;
   min-width: 80%;
