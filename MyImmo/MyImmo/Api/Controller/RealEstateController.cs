@@ -11,14 +11,14 @@ namespace MyImmo.Api.Controller;
 public class RealEstateController(IRealEstateService realEstateService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<RealEstateResponseDto>> CreateRealEstate([FromBody] RealEstatePost realEstate)
+    public async Task<ActionResult<RealEstate>> CreateRealEstate([FromBody] RealEstatePost realEstate)
     {
         var response = await realEstateService.CreateRealEstate(realEstate);
         return Ok(response);
     }
 
     [HttpGet]
-    public async Task<ActionResult<AllRealEstatesResponseDto>> GetAllRealEstates()
+    public async Task<ActionResult<IReadOnlyCollection<RealEstate>>> GetAllRealEstates()
     {
         var response = await realEstateService.GetAllRealEstates();
 
