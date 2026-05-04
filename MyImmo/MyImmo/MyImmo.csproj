@@ -17,17 +17,5 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="MyImmo.Tests/**/*.cs" />
-    <EmbeddedResource Remove="MyImmo.Tests/**/*" />
-    <None Remove="MyImmo.Tests/**/*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="MyImmo.IntegrationTests/**/*.cs" />
-    <EmbeddedResource Remove="MyImmo.IntegrationTests/**/*" />
-    <None Remove="MyImmo.IntegrationTests/**/*" />
-  </ItemGroup>
-
+  
 </Project>
