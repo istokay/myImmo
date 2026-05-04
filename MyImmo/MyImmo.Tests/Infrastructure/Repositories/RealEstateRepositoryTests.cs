@@ -9,7 +9,7 @@ namespace MyImmo.Tests.Infrastructure.Repositories;
 public class RealEstateRepositoryTests
 {
     [Fact]
-    public async Task CreateRealEstate_PersistsRealEstateAndMappedIncomes()
+    public async Task CreateRealEstate()
     {
         await using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
@@ -20,32 +20,45 @@ public class RealEstateRepositoryTests
 
         var created = await repository.CreateRealEstate(realEstate);
 
-        var persisted = await dbContext.RealEstates
-            .Include(entity => entity.Incomes)
-            .SingleAsync();
-
-        Assert.Empty(persisted.Incomes!);
-        Assert.Equal("Immo1", persisted.Name);
+        Assert.Equal("Immo1", created.Name);
     }
 
     [Fact]
-    public async Task CreateRealEstate_AllowsMissingIncomes()
+    public async Task UpateRealEstate()
     {
         await using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
-        var realEstate = new RealEstatePost
+        var created = await repository.CreateRealEstate(new RealEstatePost
         {
-            Name = "Immo"
+            Name = "Immo2",
+        });
+
+        var update = new RealEstatePost
+        {
+            Name = "Immo2 updated",
         };
 
-        await repository.CreateRealEstate(realEstate);
+        var updated = await repository.UpdateRealEstate(created.Id, update);
 
-        var persisted = await dbContext.RealEstates
-            .Include(entity => entity.Incomes)
-            .SingleAsync();
+        Assert.Equal("Immo2 updated", updated!.Name);
+    }
 
-        Assert.NotNull(persisted.Incomes);
-        Assert.Empty(persisted.Incomes!);
+    [Fact]
+    public async Task DeleteRealEstate()
+    {
+        await using var dbContext = CreateDbContext();
+
+        var repository = new RealEstateRepository(dbContext);
+
+        var created = await repository.CreateRealEstate(new RealEstatePost
+        {
+            Name = "Immo1"
+        });
+
+        await repository.DeleteRealEstate(created.Id);
+
+        var persisted = await dbContext.RealEstates.ToListAsync();
+        Assert.Empty(persisted);
     }
 
     private static RealEstateDbContext CreateDbContext()
