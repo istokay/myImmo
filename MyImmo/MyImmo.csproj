@@ -24,4 +24,10 @@
     <None Remove="MyImmo.Tests/**/*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="MyImmo.IntegrationTests/**/*.cs" />
+    <EmbeddedResource Remove="MyImmo.IntegrationTests/**/*" />
+    <None Remove="MyImmo.IntegrationTests/**/*" />
+  </ItemGroup>
+
 </Project>
