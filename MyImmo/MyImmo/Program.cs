@@ -20,9 +20,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddScoped<IRealEstateService, RealEstateService>();
-builder.Services.AddScoped<IIncomeService, IncomeService>();
 builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
-builder.Services.AddScoped<IIncomeRepository, IncomeRepository>();
 builder.Services.AddOpenApi();
 
 var connString = builder.Configuration.GetConnectionString("DefaultConnection");

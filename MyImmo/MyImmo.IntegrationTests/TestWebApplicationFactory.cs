@@ -28,9 +28,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
         builder.ConfigureServices(services =>
         {
             services.AddScoped<IRealEstateService, RealEstateService>();
-            services.AddScoped<IIncomeService, IncomeService>();
             services.AddScoped<IRealEstateRepository, RealEstateRepository>();
-            services.AddScoped<IIncomeRepository, IncomeRepository>();
 
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<RealEstateDbContext>));
