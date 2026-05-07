@@ -6,27 +6,27 @@ namespace MyImmo.App.Services;
 
 public class RealEstateService(IRealEstateRepository realEstateRepository) : IRealEstateService
 {
-    public async Task<RealEstate> CreateRealEstate(RealEstatePost realEstate)
+    public RealEstate CreateRealEstate(RealEstatePost realEstate)
     {
-        return await realEstateRepository.CreateRealEstate(realEstate);
+        return realEstateRepository.CreateRealEstate(realEstate);
     }
 
-    public async Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates()
+    public IReadOnlyCollection<RealEstate> GetAllRealEstates()
     {
-        return await realEstateRepository.GetAllRealEstates();
+        return realEstateRepository.GetAllRealEstates();
     }
 
-    public async Task DeleteRealEstate(int id)
+    public void DeleteRealEstate(int id)
     {
-        var realEstateDeleted = await realEstateRepository.DeleteRealEstate(id);
+        var realEstateDeleted = realEstateRepository.DeleteRealEstate(id);
 
         if (realEstateDeleted == false)
             throw new EntityNotFoundException(id.ToString());
     }
 
-    public async Task<RealEstate> UpdateRealEstate(int id, RealEstatePost realEstate)
+    public RealEstate UpdateRealEstate(int id, RealEstatePost realEstate)
     {
-        var realEstateResult = await realEstateRepository.UpdateRealEstate(id, realEstate);
+        var realEstateResult = realEstateRepository.UpdateRealEstate(id, realEstate);
 
         if (realEstateResult == null)
         {

@@ -9,9 +9,9 @@ namespace MyImmo.Tests.Infrastructure.Repositories;
 public class RealEstateRepositoryTests
 {
     [Fact]
-    public async Task CreateRealEstate_ProcessNullIncome()
+    public void CreateRealEstate_ProcessNullIncome()
     {
-        await using var dbContext = CreateDbContext();
+        using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
         var realEstate = new RealEstatePost
         {
@@ -19,19 +19,19 @@ public class RealEstateRepositoryTests
             Incomes = null
         };
 
-        var created = await repository.CreateRealEstate(realEstate);
+        var created = repository.CreateRealEstate(realEstate);
 
         Assert.Equal("Immo1", created.Name);
         Assert.Empty(created.Incomes!);
     }
     [Fact]
-    public async Task CreateRealEstate_ProcessIncome()
+    public void CreateRealEstate_ProcessIncome()
     {
-        await using var dbContext = CreateDbContext();
+        using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
         var realEstate = CreateRealEstatePost();
 
-        var created = await repository.CreateRealEstate(realEstate);
+        var created = repository.CreateRealEstate(realEstate);
 
         Assert.Equal("Immo2", created.Name);
         Assert.Equal(2, created.Incomes.Count);
@@ -51,11 +51,11 @@ public class RealEstateRepositoryTests
     }
 
     [Fact]
-    public async Task UpateRealEstate()
+    public void UpateRealEstate()
     {
-        await using var dbContext = CreateDbContext();
+        using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
-        var created = await repository.CreateRealEstate(new RealEstatePost
+        var created = repository.CreateRealEstate(new RealEstatePost
         {
             Name = "Immo2",
             Incomes = new List<IncomePost>
@@ -83,7 +83,7 @@ public class RealEstateRepositoryTests
             }
         };
 
-        var updated = await repository.UpdateRealEstate(created.Id, update);
+        var updated = repository.UpdateRealEstate(created.Id, update);
 
         Assert.Equal("Immo2 updated", updated!.Name);
         Assert.Single(updated.Incomes);
@@ -96,15 +96,15 @@ public class RealEstateRepositoryTests
     }
 
     [Fact]
-    public async Task UpateRealEstate_MultipleIncomes()
+    public void UpateRealEstate_MultipleIncomes()
     {
-        await using var dbContext = CreateDbContext();
+        using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
-        var created = await repository.CreateRealEstate(CreateRealEstatePost());
+        var created = repository.CreateRealEstate(CreateRealEstatePost());
 
         var update = CreateUpdateRealEstatePost();
 
-        var updated = await repository.UpdateRealEstate(created.Id, update);
+        var updated = repository.UpdateRealEstate(created.Id, update);
 
         Assert.Equal("Immo2 after", updated!.Name);
         Assert.Equal(2, updated.Incomes.Count);
@@ -123,18 +123,18 @@ public class RealEstateRepositoryTests
     }
 
     [Fact]
-    public async Task DeleteRealEstate()
+    public void DeleteRealEstate()
     {
-        await using var dbContext = CreateDbContext();
+        using var dbContext = CreateDbContext();
 
         var repository = new RealEstateRepository(dbContext);
 
-        var created = await repository.CreateRealEstate(new RealEstatePost
+        var created = repository.CreateRealEstate(new RealEstatePost
         {
             Name = "Immo1"
         });
 
-        await repository.DeleteRealEstate(created.Id);
+        repository.DeleteRealEstate(created.Id);
 
         var persisted = dbContext.RealEstates.ToList();
         Assert.Empty(persisted);

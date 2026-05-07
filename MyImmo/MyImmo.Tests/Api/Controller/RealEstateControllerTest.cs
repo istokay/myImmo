@@ -15,13 +15,13 @@ public class RealEstateControllerTest
 
         var realEstatePost = new RealEstatePost { Name = "realEstate1" };
         realEstateServiceMock.Setup(x => x.CreateRealEstate(realEstatePost))
-        .ReturnsAsync(new RealEstate
+        .Returns(new RealEstate
         {
             Id = 1,
             Name = realEstatePost.Name
         });
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .CreateRealEstate(realEstatePost);
 
         Assert.IsType<ActionResult<RealEstate>>(result);
@@ -45,9 +45,9 @@ public class RealEstateControllerTest
             }
         };
         realEstateServiceMock.Setup(x => x.GetAllRealEstates())
-       .ReturnsAsync(reList);
+       .Returns(reList);
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .GetAllRealEstates();
 
         Assert.IsType<ActionResult<IReadOnlyCollection<RealEstate>>>(result);
@@ -67,9 +67,9 @@ public class RealEstateControllerTest
         var realEstateServiceMock = new Mock<IRealEstateService>();
 
         realEstateServiceMock.Setup(x => x.GetAllRealEstates())
-       .ReturnsAsync([]);
+       .Returns([]);
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .GetAllRealEstates();
 
         Assert.IsType<NotFoundResult>(result.Result);
@@ -82,7 +82,7 @@ public class RealEstateControllerTest
 
         realEstateServiceMock.Setup(x => x.DeleteRealEstate(1));
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .DeleteRealEstateById(1);
 
         Assert.IsType<OkResult>(result);
@@ -94,9 +94,9 @@ public class RealEstateControllerTest
         var realEstateServiceMock = new Mock<IRealEstateService>();
 
         realEstateServiceMock.Setup(x => x.DeleteRealEstate(2))
-        .ThrowsAsync(new EntityNotFoundException("2"));
+        .Throws(new EntityNotFoundException("2"));
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .DeleteRealEstateById(2);
 
         Assert.IsType<NotFoundResult>(result);
@@ -111,13 +111,13 @@ public class RealEstateControllerTest
         var realEstateId = 1;
 
         realEstateServiceMock.Setup(x => x.UpdateRealEstate(realEstateId, realEstatePost))
-        .ReturnsAsync(new RealEstate
+        .Returns(new RealEstate
         {
             Id = realEstateId,
             Name = realEstatePost.Name
         });
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .UpdateRealEstate(realEstateId, realEstatePost);
 
         var actionResult = Assert.IsType<ActionResult<RealEstate>>(result);
@@ -135,9 +135,9 @@ public class RealEstateControllerTest
         var realEstatePost = new RealEstatePost { Name = "realEstate4" };
 
         realEstateServiceMock.Setup(x => x.UpdateRealEstate(2, realEstatePost))
-        .ThrowsAsync(new EntityNotFoundException("2"));
+        .Throws(new EntityNotFoundException("2"));
 
-        var result = await new RealEstateController(realEstateServiceMock.Object)
+        var result = new RealEstateController(realEstateServiceMock.Object)
         .UpdateRealEstate(2, realEstatePost);
 
         Assert.IsType<NotFoundResult>(result.Result);

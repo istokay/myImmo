@@ -8,29 +8,29 @@ namespace MyImmo.Infrastructure.Repositories;
 
 public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRepository
 {
-    public async Task<RealEstate> CreateRealEstate(RealEstatePost realEstate)
+    public RealEstate CreateRealEstate(RealEstatePost realEstate)
     {
         var entity = dbContext.RealEstates.Add(MapToEntity(realEstate));
 
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
 
         return MapToDomain(entity.Entity);
     }
 
-    public async Task<IReadOnlyCollection<RealEstate>> GetAllRealEstates()
+    public IReadOnlyCollection<RealEstate> GetAllRealEstates()
     {
-        var result = await dbContext.RealEstates.Select(entitie => new RealEstate
+        var result = dbContext.RealEstates.Select(entitie => new RealEstate
         {
             Name = entitie.Name,
             Id = entitie.Id
-        }).ToArrayAsync();
+        }).ToArray();
 
         return result;
     }
 
-    public async Task<RealEstate?> UpdateRealEstate(int id, RealEstatePost realEstate)
+    public RealEstate? UpdateRealEstate(int id, RealEstatePost realEstate)
     {
-        var entity = await dbContext.RealEstates.Include(re => re.Incomes).SingleOrDefaultAsync(re => re.Id == id);
+        var entity = dbContext.RealEstates.Include(re => re.Incomes).SingleOrDefault(re => re.Id == id);
 
         if (entity == null)
         {
@@ -43,23 +43,23 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
 
         entity.Incomes = realEstate.Incomes?.Select(MapIncomeToEntity).ToList() ?? new List<IncomeEntity>();
 
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
 
         return MapToDomain(entity);
     }
 
-    public async Task<bool> DeleteRealEstate(int id)
+    public bool DeleteRealEstate(int id)
     {
         var isDeleted = true;
 
-        var realEstate = await dbContext.RealEstates.Include(re => re.Incomes).SingleOrDefaultAsync(re => re.Id == id);
+        var realEstate = dbContext.RealEstates.Include(re => re.Incomes).SingleOrDefault(re => re.Id == id);
 
         if (realEstate == null)
             return !isDeleted;
 
         dbContext.RealEstates.Remove(realEstate);
 
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
 
         return isDeleted;
     }
