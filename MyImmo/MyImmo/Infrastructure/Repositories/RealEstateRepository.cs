@@ -73,7 +73,8 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             {
                 Name = i.Name,
                 Amount = i.Amount,
-                Category = i.IncomeCategory
+                PaymentRange = i.PaymentRange,
+                InitialDate = i.InitialDate
             }).ToList() ?? new List<IncomeEntity>()
         };
     }
@@ -88,7 +89,8 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
             {
                 Name = i.Name,
                 Amount = i.Amount,
-                IncomeCategory = i.Category
+                PaymentRange = i.PaymentRange,
+                InitialDate = i.InitialDate
             }).ToList()
         };
         return result;
@@ -100,7 +102,8 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         {
             Name = income.Name,
             Amount = income.Amount,
-            Category = income.IncomeCategory
+            PaymentRange = income.PaymentRange,
+            InitialDate = income.InitialDate
         };
     }
 }

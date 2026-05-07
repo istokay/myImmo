@@ -1,6 +1,6 @@
 namespace MyImmo.Domain.Dtos;
 
-public enum IncomeCategory
+public enum PaymentRange
 {
     OneTimePayment,
     AnnualPayment,

@@ -40,13 +40,15 @@ public class RealEstateRepositoryTests
         Assert.Contains(created.Incomes, i =>
             i.Name == "income3" &&
             i.Amount == 28 &&
-            i.IncomeCategory == IncomeCategory.OneTimePayment
+            i.PaymentRange == PaymentRange.OneTimePayment &&
+            i.InitialDate == new DateTime(2022, 8, 19)
         );
 
         Assert.Contains(created.Incomes, i =>
             i.Name == "income2" &&
             i.Amount == 9 &&
-            i.IncomeCategory == IncomeCategory.OneTimePayment
+            i.PaymentRange == PaymentRange.OneTimePayment &&
+            i.InitialDate == new DateTime(2022, 8, 20)
         );
     }
 
@@ -64,7 +66,8 @@ public class RealEstateRepositoryTests
                 {
                     Name = "income before",
                     Amount = 334,
-                    IncomeCategory = IncomeCategory.OneTimePayment
+                    PaymentRange = PaymentRange.OneTimePayment,
+                    InitialDate = new DateTime(2026, 2, 23)
                 }
             }
         });
@@ -78,7 +81,8 @@ public class RealEstateRepositoryTests
                 {
                     Name = "income after",
                     Amount = 455,
-                    IncomeCategory = IncomeCategory.MonthlyPayment
+                    PaymentRange = PaymentRange.MonthlyPayment,
+                    InitialDate = new DateTime(2026, 2, 24)
                 }
             }
         };
@@ -91,7 +95,8 @@ public class RealEstateRepositoryTests
         Assert.Contains(updated.Incomes, i =>
             i.Name == "income after" &&
             i.Amount == 455 &&
-            i.IncomeCategory == IncomeCategory.MonthlyPayment
+            i.PaymentRange == PaymentRange.MonthlyPayment &&
+            i.InitialDate == new DateTime(2026, 2, 24)
         );
     }
 
@@ -112,13 +117,15 @@ public class RealEstateRepositoryTests
         Assert.Contains(updated.Incomes, i =>
             i.Name == "income3 after" &&
             i.Amount == 64 &&
-            i.IncomeCategory == IncomeCategory.MonthlyPayment
+            i.PaymentRange == PaymentRange.MonthlyPayment &&
+            i.InitialDate == new DateTime(2015, 5, 5)
         );
 
         Assert.Contains(updated.Incomes, i =>
             i.Name == "income2 after" &&
             i.Amount == 455 &&
-            i.IncomeCategory == IncomeCategory.MonthlyPayment
+            i.PaymentRange == PaymentRange.MonthlyPayment &&
+            i.InitialDate == new DateTime(2018, 8, 7)
         );
     }
 
@@ -160,13 +167,15 @@ public class RealEstateRepositoryTests
                 {
                     Name = "income3",
                     Amount = 28,
-                    IncomeCategory = IncomeCategory.OneTimePayment
+                    PaymentRange = PaymentRange.OneTimePayment,
+                    InitialDate = new DateTime(2022, 8, 19)
                 },
                 new()
                 {
                     Name = "income2",
                     Amount = 9,
-                    IncomeCategory = IncomeCategory.OneTimePayment
+                    PaymentRange = PaymentRange.OneTimePayment,
+                    InitialDate = new DateTime(2022, 8, 20)
                 }
             }
         };
@@ -182,13 +191,15 @@ public class RealEstateRepositoryTests
                 {
                     Name = "income3 after",
                     Amount = 64,
-                    IncomeCategory = IncomeCategory.MonthlyPayment
+                    PaymentRange = PaymentRange.MonthlyPayment,
+                    InitialDate = new DateTime(2015, 5, 5)
                 },
                 new()
                 {
                     Name = "income2 after",
                     Amount = 455,
-                    IncomeCategory = IncomeCategory.MonthlyPayment
+                    PaymentRange = PaymentRange.MonthlyPayment,
+                    InitialDate = new DateTime(2018, 8, 7)
                 }
             }
         };
