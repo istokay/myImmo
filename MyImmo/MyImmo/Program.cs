@@ -23,10 +23,11 @@ builder.Services.AddScoped<IRealEstateService, RealEstateService>();
 builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
 builder.Services.AddOpenApi();
 
-var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+var dbPath = Path.Combine(builder.Environment.ContentRootPath, "realestate.db");
 
 builder.Services.AddDbContext<RealEstateDbContext>(options =>
-    options.UseSqlite(connString));
+
+    options.UseSqlite($"Data Source={dbPath}"));
 
 builder.Services.AddCors(options =>
 {
@@ -38,13 +39,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowAngular");
-
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RealEstateDbContext>();
     db.Database.EnsureCreated();
 }
+
+app.UseCors("AllowAngular");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
