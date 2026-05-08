@@ -8,10 +8,11 @@ import { RealEstateDialogComponent } from './dialog-component/dialog-component';
 import { RealEstate } from './api/dtos/realEstate';
 import { MatTableModule } from '@angular/material/table';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-real-estate-component',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, MatTableModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatTableModule, RouterModule],
   templateUrl: './real-estate-component.html',
   styleUrl: './real-estate-component.css',
   providers: [],
