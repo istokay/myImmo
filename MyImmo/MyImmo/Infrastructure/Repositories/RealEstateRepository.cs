@@ -40,8 +40,10 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
         entity.Name = realEstate.Name;
 
         dbContext.Incomes.RemoveRange(entity.Incomes);
+        dbContext.Expenses.RemoveRange(entity.Expenses);
 
         entity.Incomes = realEstate.Incomes?.Select(MapIncomeToEntity).ToList() ?? new List<IncomeEntity>();
+        entity.Expenses = realEstate.Expenses?.Select(MapExpensesToEntity).ToList() ?? new List<ExpensesEntity>();
 
         dbContext.SaveChanges();
 
@@ -52,7 +54,7 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     {
         var isDeleted = true;
 
-        var realEstate = dbContext.RealEstates.Include(re => re.Incomes).SingleOrDefault(re => re.Id == id);
+        var realEstate = dbContext.RealEstates.Include(re => re.Incomes).Include(re => re.Expenses).SingleOrDefault(re => re.Id == id);
 
         if (realEstate == null)
             return !isDeleted;
@@ -75,7 +77,14 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
                 Amount = i.Amount,
                 PaymentRange = i.PaymentRange,
                 InitialDate = i.InitialDate
-            }).ToList() ?? new List<IncomeEntity>()
+            }).ToList() ?? new List<IncomeEntity>(),
+            Expenses = realEstate.Expenses?.Select(i => new ExpensesEntity
+            {
+                Name = i.Name,
+                Amount = i.Amount,
+                PaymentRange = i.PaymentRange,
+                InitialDate = i.InitialDate
+            }).ToList() ?? new List<ExpensesEntity>()
         };
     }
 
@@ -91,6 +100,13 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
                 Amount = i.Amount,
                 PaymentRange = i.PaymentRange,
                 InitialDate = i.InitialDate
+            }).ToList(),
+            Expenses = entity.Expenses.Select(i => new Expenses
+            {
+                Name = i.Name,
+                Amount = i.Amount,
+                PaymentRange = i.PaymentRange,
+                InitialDate = i.InitialDate
             }).ToList()
         };
         return result;
@@ -99,6 +115,16 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
     private static IncomeEntity MapIncomeToEntity(IncomePost income)
     {
         return new IncomeEntity
+        {
+            Name = income.Name,
+            Amount = income.Amount,
+            PaymentRange = income.PaymentRange,
+            InitialDate = income.InitialDate
+        };
+    }
+    private static ExpensesEntity MapExpensesToEntity(ExpensesPost income)
+    {
+        return new ExpensesEntity
         {
             Name = income.Name,
             Amount = income.Amount,

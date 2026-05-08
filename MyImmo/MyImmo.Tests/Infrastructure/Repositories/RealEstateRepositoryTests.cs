@@ -23,6 +23,7 @@ public class RealEstateRepositoryTests
 
         Assert.Equal("Immo1", created.Name);
         Assert.Empty(created.Incomes!);
+        Assert.Empty(created.Expenses!);
     }
     [Fact]
     public void CreateRealEstate_ProcessIncome()
@@ -48,6 +49,20 @@ public class RealEstateRepositoryTests
             i.Name == "income2" &&
             i.Amount == 9 &&
             i.PaymentRange == PaymentRange.OneTimePayment &&
+            i.InitialDate == new DateTime(2022, 8, 20)
+        );
+
+        Assert.Contains(created.Expenses, i =>
+            i.Name == "expenses3" &&
+            i.Amount == 23 &&
+            i.PaymentRange == PaymentRange.AnnualPayment &&
+            i.InitialDate == new DateTime(2022, 8, 19)
+        );
+
+        Assert.Contains(created.Expenses, i =>
+            i.Name == "expenses4" &&
+            i.Amount == 98 &&
+            i.PaymentRange == PaymentRange.AnnualPayment &&
             i.InitialDate == new DateTime(2022, 8, 20)
         );
     }
@@ -101,7 +116,7 @@ public class RealEstateRepositoryTests
     }
 
     [Fact]
-    public void UpateRealEstate_MultipleIncomes()
+    public void UpateRealEstate_MultipleIncomesAndExpenses()
     {
         using var dbContext = CreateDbContext();
         var repository = new RealEstateRepository(dbContext);
@@ -127,6 +142,20 @@ public class RealEstateRepositoryTests
             i.PaymentRange == PaymentRange.MonthlyPayment &&
             i.InitialDate == new DateTime(2018, 8, 7)
         );
+
+        Assert.Contains(updated.Expenses, i =>
+            i.Name == "expenses3 after" &&
+            i.Amount == 4 &&
+            i.PaymentRange == PaymentRange.OneTimePayment &&
+            i.InitialDate == new DateTime(2015, 5, 5)
+        );
+
+        Assert.Contains(updated.Expenses, i =>
+            i.Name == "expenses4 after" &&
+            i.Amount == 4589 &&
+            i.PaymentRange == PaymentRange.OneTimePayment &&
+            i.InitialDate == new DateTime(2018, 8, 7)
+        );
     }
 
     [Fact]
@@ -145,6 +174,25 @@ public class RealEstateRepositoryTests
 
         var persisted = dbContext.RealEstates.ToList();
         Assert.Empty(persisted);
+    }
+
+    [Fact]
+    public void DeleteRealEstateIncomesAndExpenses()
+    {
+        using var dbContext = CreateDbContext();
+
+        var repository = new RealEstateRepository(dbContext);
+
+        var created = repository.CreateRealEstate(CreateRealEstatePost());
+
+        repository.DeleteRealEstate(created.Id);
+
+        var persisted = dbContext.RealEstates.ToList();
+        var persistedIncomes = dbContext.Incomes.ToList();
+        var persistedExpenses = dbContext.Expenses.ToList();
+        Assert.Empty(persisted);
+        Assert.Empty(persistedIncomes);
+        Assert.Empty(persistedExpenses);
     }
 
     private static RealEstateDbContext CreateDbContext()
@@ -177,6 +225,23 @@ public class RealEstateRepositoryTests
                     PaymentRange = PaymentRange.OneTimePayment,
                     InitialDate = new DateTime(2022, 8, 20)
                 }
+            },
+            Expenses = new List<ExpensesPost>
+            {
+                new()
+                {
+                    Name = "expenses3",
+                    Amount = 23,
+                    PaymentRange = PaymentRange.AnnualPayment,
+                    InitialDate = new DateTime(2022, 8, 19)
+                },
+                new()
+                {
+                    Name = "expenses4",
+                    Amount = 98,
+                    PaymentRange = PaymentRange.AnnualPayment,
+                    InitialDate = new DateTime(2022, 8, 20)
+                }
             }
         };
     }
@@ -199,6 +264,23 @@ public class RealEstateRepositoryTests
                     Name = "income2 after",
                     Amount = 455,
                     PaymentRange = PaymentRange.MonthlyPayment,
+                    InitialDate = new DateTime(2018, 8, 7)
+                }
+            },
+            Expenses = new List<ExpensesPost>
+            {
+                new()
+                {
+                    Name = "expenses3 after",
+                    Amount = 4,
+                    PaymentRange = PaymentRange.OneTimePayment,
+                    InitialDate = new DateTime(2015, 5, 5)
+                },
+                new()
+                {
+                    Name = "expenses4 after",
+                    Amount = 4589,
+                    PaymentRange = PaymentRange.OneTimePayment,
                     InitialDate = new DateTime(2018, 8, 7)
                 }
             }

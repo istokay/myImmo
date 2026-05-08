@@ -5,5 +5,6 @@ public class RealEstateEntity
     public int Id { get; set; }
     public required string Name { get; set; }
     public ICollection<IncomeEntity> Incomes { get; set; } = new List<IncomeEntity>();
+    public ICollection<ExpensesEntity> Expenses { get; set; } = new List<ExpensesEntity>();
 
 }
