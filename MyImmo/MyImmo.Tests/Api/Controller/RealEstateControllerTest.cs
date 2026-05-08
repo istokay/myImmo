@@ -62,7 +62,7 @@ public class RealEstateControllerTest
     }
 
     [Fact]
-    public async Task GetAllRealEstates_returns_NotFound_if_not_exist()
+    public void GetAllRealEstates_returns_NotFound_if_not_exist()
     {
         var realEstateServiceMock = new Mock<IRealEstateService>();
 

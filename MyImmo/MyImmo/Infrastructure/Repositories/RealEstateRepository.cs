@@ -19,11 +19,11 @@ public class RealEstateRepository(RealEstateDbContext dbContext) : IRealEstateRe
 
     public IReadOnlyCollection<RealEstate> GetAllRealEstates()
     {
-        var result = dbContext.RealEstates.Select(entitie => new RealEstate
+        var result = dbContext.RealEstates?.Select(entitie => new RealEstate
         {
             Name = entitie.Name,
             Id = entitie.Id
-        }).ToArray();
+        }).ToArray() ?? [];
 
         return result;
     }

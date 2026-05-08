@@ -195,6 +195,17 @@ public class RealEstateRepositoryTests
         Assert.Empty(persistedExpenses);
     }
 
+    [Fact]
+    private void GetAllRealEstates_ReturnsNullIfEmpty()
+    {
+        using var dbContext = CreateDbContext();
+        var repository = new RealEstateRepository(dbContext);
+
+        var result = repository.GetAllRealEstates();
+
+        Assert.Empty(result);
+    }
+
     private static RealEstateDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<RealEstateDbContext>()
